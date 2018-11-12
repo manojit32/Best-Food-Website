@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {%if p_title%}
+    <title>{{ p_title }}</title>
+    {%else %}
+    <title>Home Page</title>
+    {%endif%}
+    
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% for stylesheet in stylesheets%}
+    {%set temp='static/css/'+stylesheet %}
+     {%set temp=url_for('static',filename='css/'+stylesheet) %}
+        <link rel="stylesheet" href="{{temp}}">
+    {% endfor%}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="/static/css/sidebar.css">
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+
+  </head>
+  <body onload="reloadSidebar();">
+     {% block header%}
+     {% endblock %}
+     {% block content%}
+     
+     {% endblock %}
+    {% for script in scripts%}
+    {%set temp=url_for('static',filename='js/'+script) %}
+    <script src="{{temp}}"></script>
+    {% endfor%}
+    
+    
+            <!-- {% if sidebarHTML %}
+            {% set template = sidebarHTML +'.html'  %}
+            {% include template %}
+            {% endif %} -->
+       {% if session.email  %}
+       {% if not nosidebar %}
+       <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar"> 
+       {% include '_sidebar.html' %}
+            </nav>
+        </div>
+        {% endif %}
+       {% endif %}
+
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  {% if session.email %}
+      <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+  <!-- Bootstrap Js CDN -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- jQuery Custom Scroller CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+  
+  <script type="text/javascript">
+      $(document).ready(function () {
+          $("#sidebar").mCustomScrollbar({
+              theme: "minimal"
+          });
+          $('#sidebar, #content').toggleClass('active');
+          $('#sidebarCollapse').on('click', function () {
+              $('#sidebar, #content').toggleClass('active');
+              $('.collapse.in').toggleClass('in');
+              $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+          });
+      });
+
+      
+
+
+  </script>
+
+
+  
+  {% endif %}
+    <!-- <a href="#" class="back-to-top  fixed-bottom " style="text-align:right;">
+<i class="material-icons text-primary" style="font-size:48px;   ">arrow_upward</i>
+    </a> -->
+  </body>
+</html>

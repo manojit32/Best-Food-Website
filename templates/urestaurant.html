@@ -1,0 +1,52 @@
+{% extends "_base.html" %}
+{% block content%}
+    {% if header%} {% include '_header.html' %} {% endif %}
+    {% if d %}  {% endif %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+ 
+<div class="container-fluid">
+ 
+  <div class="card" style="width:400px ">
+  <div class="row">
+  <div class="col-sm-4 ">
+  
+  <img class="card-img-bottom pt-2 pl-2" src="https://b.zmtcdn.com/data/ads_creatives/b66/8d9dbd10dafa8bc33d2188d63d63eb66.jpg" alt="Card image" style="width:110%">
+  </div>
+  
+    
+    <div class="col-sm-8">
+      <h5 class="card-title" id="r_name" value={{d.r_name}}>{{d.r_name}}</h5>
+      <span id="r_phone" >phone: {{d.r_phone}}</span><br>
+      <span id="r_rating" >rating: {{d.r_rating}}</span><br>
+      <span id="r_address" >address: {{d.r_address}}</span><br>
+     <span id="r_location">location: {{d.r_location}}</span><br>
+      
+    </div>
+    
+    </div>
+    <div class="row">
+    <div class="col-sm-12 pt-2">
+    <button class="btn btn-primary btn-m btn-block " >order online</button>
+    </div>
+    </div>
+    </div>
+   
+  </div>
+  <br>
+  
+
+
+</body>
+</html>
+{% endblock %}

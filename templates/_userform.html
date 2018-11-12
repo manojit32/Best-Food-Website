@@ -1,0 +1,107 @@
+{% extends "_base.html" %}
+{% if header%}
+{% include '_header.html' %}
+{% endif %}
+{% block content%}
+         {%if error%}
+        <h3>{{error}}</h3>
+        {%endif%}
+    {%if invoice is not none  and invoice|length > 0 %}
+    <div class="p-5 container">
+    <div class="alert alert-success">
+        <h4>Your order from <b>{{invoice["restaurant"]}}</b></h4>
+    </div>
+    <div class="d-flex flex-column justify-content-center">
+    <div class="row justify-content-center ">
+    <div class="col-sm-12">
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">S.No</th>
+                <!-- <th scope="col">Item ID</th> -->
+                <th scope="col">Item Name</th>
+                <th scope="col">Item Quantity</th>
+                <th scope="col">Item Price</th>
+            </tr>
+        </thead>
+        <tbody>
+    
+    {% for item in invoice["items"]%}
+                <tr>
+                    <th scope="row">{{loop.index}}</th>
+                    <!-- <td>{{item[0]}}</td> -->
+                    <td>{{item[1]}}</td>
+                    <td>{{item[2]}}</td>
+                    <td><span style="font-family: verdana;">&#8377;</span> {{item[3]}}</td>
+                </tr>    
+    {%endfor%}
+        </tbody>
+        </table>
+    </div>
+    </div>
+    </div>
+    <div class="row justify-content-end">
+    <!-- <div class="d-flex flex-row-reverse  p-4"> -->
+        <div class="col-sm-6">
+        <table class="table align-self-end">
+            <tbody>
+                <tr>
+                    <th scope="row">Tax  : </th>
+                    <td><span style="font-family: verdana;">&#8377;</span> {{invoice["tax"]}}</td>
+                </tr>
+                <tr>
+                    <th scope="row"> Total  :</th>
+                    <td><span style="font-family: verdana;">&#8377;</span> {{invoice["total"]}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- </div> -->
+    </div>
+
+    {% if userform%}
+    <div class="d-flex flex-column   p-8">
+    <form action="/placeorder" name="placeorder_form" method="POST" onsubmit="return checkUserForm(this);" >
+        <div class="form-row justify-content-center">
+           <div class="col-sm-3 my-1">
+                <label class="sr-only" for="u_name">Name</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">&#128104;</div>
+                    </div>
+                    <input type="text" class="form-control" id="u_name" name="u_name" value="{{u_details.get('u_fname','') }}" required>
+                </div>
+            </div>
+            <div class="col-sm-3 my-1">
+                <label class="sr-only" for="u_phone">Phone Number</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">&#128222;</div>
+                    </div>
+                    <input type="text" class="form-control" id="u_phone" name="u_phone" value="{{ u_details.get('u_mobile','') }}"   pattern="^\d{4}\d{2}\d{4}$" required>
+                </div>
+            </div>
+            <div class="col-sm-3 my-1">
+                <label class="sr-only" for="u_address">Address</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">&#x270e;</div>
+                    </div>
+                    <input type="text" class="form-control" id="u_address" name="u_address" value="{{ u_details.get('u_address','') }}" required>
+                </div>
+            </div>
+        
+        </div>
+        <div class="form-row justify-content-center">
+                <div class="col-auto my-1">
+                    <button type="submit" class="btn btn-primary">Place Order</button>
+                </div>
+        </div>
+    </form>
+    </div>
+    </div>
+     {% endif %}
+    {%endif%}
+{% endblock%}
+<!-- <script type="text/javascript"> -->
+<!-- </script> -->

@@ -1,0 +1,68 @@
+<nav class="navbar navbar-sticky-top m-0" style="background-color: #253340">
+
+
+    <!-- Links -->
+    <div class="col-auto">
+	<a href="/"><img  src="/static/media/logo.jpg" height="100px" width="150px" alt="Food Panther Logo"></a>
+    </div>
+     {% if not removeCartSettings %}
+    <div class="col-auto">
+    {% include "microphone.html" %}
+    </div>
+
+    {% endif %}
+    <div class="col-auto">
+     {% if not session.email %}
+        <!-- <div class="col-auto"> -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-warning">SignUp</button>
+                    <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ url_for('signup') }}">User</a>
+                    <a class="dropdown-item" href="{{ url_for('vsignup') }}">Vendor</a>
+                    </div>
+                       
+                </div>
+     <!-- <button type="button" class="btn btn-primary" ><a href="{{ url_for('signup') }}">sign up</a></button> -->
+     <!-- </div> -->
+     <!-- <div class="col-auto"> -->
+            <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <button type="button" class="btn btn-warning"> Login </button>
+                      <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                      </button>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ url_for('login') }}">User</a>
+                        <a class="dropdown-item" href="{{ url_for('vlogin') }}">Vendor</a>
+                      </div>
+                    </div>
+                  </div>
+     <!-- </div> -->
+   
+    {% else %}
+    
+    {% include "_settingsMenu.html" %}
+    {% if not removeCartSettings %}
+    <button type="button" class="btn btn-outline-warning" id="sidebarCollapse" onclick="filterSelection('all');" {% if cartdisabled %} {{"disabled"}} {% endif %}>
+            <i class="material-icons" style="font-size:15px;" >add_shopping_cart</i>
+    </button>
+    <button type="button" class="btn btn-outline-warning"  onclick="var r=confirm('Do you Want to Clear Cart?'); if(r==true){localStorage.removeItem('dataObject{{session.email}}');alert('cart cleared');location.reload();}">
+       Clear Cart
+    </button>
+    {% endif %}
+    <!-- <button type="button" class="btn btn-primary"  onclick="checkout();">
+        Check out
+    </button> -->
+    <button type="button" class="btn btn-outline-warning">
+        <a href="{{ url_for('logout') }}"><i class="material-icons" style="font-size:15px">power_settings_new</i></a>
+	</button>
+
+    {% endif %}
+    </div>
+	<!-- </div> -->
+</nav>
+
+

@@ -1,0 +1,11 @@
+<nav  class="navbar navbar-expand-sm navbar-light bg-secondary text-white" >
+    <ul class="navbar-nav">
+        {% if itemsDict%}
+            {% for key in itemsDict %}
+                <li class="nav-item">
+                    <a class="nav-link py-0 text-white" href="{{ itemsDict[key]['href'] }}">{{itemsDict[key]["atext"]}}</a>
+                </li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+</nav>

@@ -1,0 +1,31 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/flickity@2.0/dist/flickity.min.css">
+<!-- <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/carousel')}}"> -->
+<style type="text/css"></style>
+<script type="text/javascript">
+  function getRestaurant(restaurant) {
+    s = "http://127.0.0.1:5000/"+restaurant+"/showitems"
+    window.open(s)
+  }
+</script>
+<script src="https://unpkg.com/flickity@2.0/dist/flickity.pkgd.min.js"></script>
+
+<div class="carousel-wrapper">
+  <div class="carousel" data-flickity>
+    {% for r_id in recommenders %}
+      <div class="carousel-cell" style="padding-right:5%;">
+        <h6 style="text-align: center;">{{ recommenders[r_id][0] }}</h6>
+          {% if recommenders[r_id][1]==None %}
+            {% set rImage='default.jpg'%}
+          {% else %}
+            {% set rImage= restaurant[r_id][1] %}
+          {% endif %}
+        <img class="card-img-top " src="/static/data/restaurant_images/{{rImage}}"
+          alt="{{rImage}}" style="width: 150px;height: 150px;" onclick='getRestaurant({{ r_id }})'>
+        <div class="line"></div>
+      </div>
+    {% endfor %}
+    </div>
+</div>

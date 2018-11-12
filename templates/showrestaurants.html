@@ -1,0 +1,155 @@
+{% extends "_base.html" %}
+{% block content%}
+    {% if header%} {% include '_header.html' %} {% endif %}
+     {% include '_vactionbar.html' %}
+    {% if rList %}  
+
+      <div class="container-fluid ">
+
+
+        <div class="d-flex justify-content-between pr-5">
+          <div></div>
+          <div>
+          <nav aria-label="Page navigation">
+            <ul class="pagination self-align-center px-5 m-0">
+              {% if prev_url %} {% set temp="" %} {% else %} {% set temp="disabled" %} {% endif %}
+              <li class="page-item {{temp}}">
+        
+                <a class="page-link" href="{{prev_url}}">Previous</a>
+              </li>
+              <!-- <li class="page-item">
+                            <a class="page-link" href="#">1</a>
+                          </li>
+                          <li class="page-item">
+                            <a class="page-link" href="#">2</a>
+                          </li>
+                          <li class="page-item">
+                            <a class="page-link" href="#">3</a>
+                          </li> -->
+              {% if next_url %} {% set temp="" %} {% else %} {% set temp="disabled" %} {% endif %}
+              <li class="page-item {{temp}}">
+                <a class="page-link" href="{{next_url}}">Next</a>
+              </li>
+            </ul>
+          </nav>
+          </div>
+
+        <div >
+          <form class="form" method="get" action="/showrestaurants">
+            <select class="form-control" style="min-height:35px;" name="sort" id="sortFilter" onchange="this.form.submit()">
+            {% if s=='1'%} {% set temp1,temp2="selected","" %} {% elif s=='2' %} {% set temp1,temp2="","selected" %} {% else %}{% set temp1,temp2="selected","" %}{%
+                                      endif %}
+              <option value="1" {{temp1}}>High Rating</option>
+              <option value="2" {{temp2}}>Low Rating</option>
+            </select>
+          </form>
+        
+        </div>
+                </div>
+        <div class="d-flex   justify-content-center flex-wrap py-4 ">
+      {%for d in rList %}
+        <div class="card m-2 " style="width:400px;">
+        <div class="card-header "><h6 class="text-info font-weight-bold text-uppercase">{{d.r_name}}</h6></div>
+          {% if d.get('r_images','default.jpg')==None %}
+          {% set rImage='default.jpg'%}
+          {% else %}
+          {% set rImage= d.get('r_images','default.jpg') %}
+          {% endif %}
+        <img class="card-img-top " src="/static/data/restaurant_images/{{rImage}}"
+          alt="{{rImage}}" >
+
+        <div class="card-body">
+        <div class="row">
+        <!-- <div class="col-sm-4 "> -->
+        
+        <!-- <img class="card-img-bottom pt-2 pl-2" src="https://b.zmtcdn.com/data/ads_creatives/b66/8d9dbd10dafa8bc33d2188d63d63eb66.jpg" alt="Card image" style="width:110%"> -->
+        <!-- </div> -->
+        
+          
+          <!-- <div class="col-sm-8"> -->
+            <!-- <h5 class="card-title" id="r_name" value={{d.r_name}}>{{d.r_name}}</h5> -->
+            <div class="col">
+            <div class=row>
+            <div class="col-sm-1">
+            <i class="material-icons text-info" style="font-size:16px;color:red;">local_phone</i>
+            </div>
+            <div class="col-sm-11 p-0">
+            <span id="r_phone" > {{d.r_phone}}</span><br>
+            </div>
+            </div>
+
+            <div class=row>
+            <div class="col-sm-1">
+            <i class="material-icons text-danger" style="font-size:16px;color:red;">favorite</i>
+            </div>
+            <div class="col-sm-11 p-0">
+            <span id="r_rating" > {{d.r_rating}} </span><br>
+            </div>
+            </div>
+
+            <div class=row>
+            <div class="col-sm-1">
+            <i class="material-icons text-muted" style="font-size:16px;color:red;">restaurant</i>
+            </div>
+            <div class="col-sm-11 p-0">
+            <span id="r_address" >  {{d.r_address}}</span><br>
+            </div>
+            </div>
+
+          <div class=row>
+            <div class="col-sm-1">
+          <i class="material-icons text-warning" style="font-size:16px;color:red;">place</i>
+          </div>
+          <div class="col-sm-11 p-0">
+          <span id="r_location"> {{d.r_location}}</span><br>
+            </div>
+            </div>
+          </div>
+          
+          </div>
+  
+          </div>
+                  <div class="card-footer">
+                    <a class="btn btn-success btn-m btn-block" href="/{{d.r_id}}/showitems">order online</a>
+                  </div>
+          </div>
+          
+          {% endfor %}
+        </div>
+        </div>
+{% endif %}
+  <a href="#" class="back-to-top  fixed-bottom " style="text-align:right;">
+    <i class="material-icons text-primary" style="font-size:48px;   ">arrow_upward</i>
+  </a>
+<div class="d-flex justify-content-center h-40">
+
+<nav aria-label="Page navigation ">
+  <ul class="pagination justify-content-center ">
+    {% if prev_url %}
+        {% set temp="" %}
+      {% else %}
+         {% set temp="disabled" %}
+      {% endif %}
+    <li class="page-item {{temp}}">
+      
+      <a class="page-link" href="{{prev_url}}" >Previous</a>
+    </li>
+    <!-- <li class="page-item">
+      <a class="page-link" href="#">1</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="#">2</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="#">3</a>
+    </li> -->
+     {% if next_url %} {% set temp="" %} {% else %} {% set temp="disabled" %} {% endif %}
+    <li class="page-item {{temp}}">
+      <a class="page-link" href="{{next_url}}">Next</a>
+    </li>
+  </ul>
+</nav>
+
+</div>
+
+{% endblock %}

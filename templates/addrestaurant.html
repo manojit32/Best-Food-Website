@@ -1,0 +1,80 @@
+{% extends "_base.html" %}
+{% block content%}
+    {% if header%} {% include '_header.html' %} {% endif %}
+    <div class="container-fluid ">
+    {% if session.email%}
+    {% include '_vactionbar.html' %}
+    {% endif %}
+        {% include '_flashmessages.html' %}
+        
+        <div class="d-flex justify-content-center">
+        <form action="/addrestaurant" method="POST" enctype="multipart/form-data">
+                <div class="form-row">
+                <!-- <div class="form-group col-md-3">
+                    <label for="inputEmail4">Email</label>
+                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                </div> -->
+                <div class="form-group col-md-6">
+                    <label for="file">Upload Image</label>
+                    <input type="file" name="file" class="form-control" onchange="readURL(this);" required/>
+                    <img id="blah" src="#" alt="Restaurant Image" />
+                </div>
+                <div class="form-group col-md-6">
+                        <label for="r_name">Name</label>
+                        <input name="r_name" type="text" class="form-control" id="r_name" placeholder="Restaurant name" required>
+                </div>
+                <div class="form-group col-md-6">
+                        <label for="r_phone">Phone</label>
+                        <input name="r_phone" type="text" class="form-control" id="r_phone" placeholder="phone" required>
+                </div>
+                </div>
+                 <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="r_email">Email</label>
+                    <input name="r_email" type="email" class="form-control" id="r_email" placeholder="Email(Optional)">
+                </div>
+                <div class="form-group col-md-6">
+                        <label for="r_website">Website</label>
+                        <input name="r_website" type="text" class="form-control" id="r_website" placeholder="Website(Optional)">
+                </div>
+                
+                </div>
+                <div class="form-row">
+                <div class="form-group col-md-12">
+                <label for="r_address">Address</label>
+                <input name="r_address" type="text" class="form-control" id="r_address" placeholder="1234 Main St" required>
+                </div>
+                </div>
+                <!-- <div class="form-row">
+                <div class="form-group col-md-12">
+                <label for="r_address2">Address 2</label>
+                <input type="text" class="form-control" id="r_address2" placeholder="Apartment, studio, or floor" required>
+                </div>
+                </div> -->
+            
+                <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="r_location">Location</label>
+                    <div class="lg">
+                    <select name="r_location" id="r_location" class="form-control-lg">
+                    <option selected>Gachibowli</option>
+                    <option>KukatPally</option>
+                    <option>HITEC City</option>
+                    <option>Ameerpet</option>
+                    </select>
+                </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="r_city">City</label>
+                    <input name="r_city" type="text" class="form-control" id="r_city" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="r_zip">Zip</label>
+                    <input name="r_zip" type="text" class="form-control" id="r_zip" required>
+                </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Restaurant</button>
+            </form>
+        </div>
+        </div>
+{% endblock %}

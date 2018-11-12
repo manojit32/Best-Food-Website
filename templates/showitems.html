@@ -1,0 +1,154 @@
+{% extends "_base.html" %}
+{% block content%}
+    {% if header%} {% include '_header.html' %} {% endif %}
+    {% include '_vactionbar.html' %}
+     {% if iList %}
+
+        <div class="container-fluid">
+        
+          <div class="panel panel-primary">
+
+          <div class="panel-heading bg-warning"><h3 class="card-title py-0"  id="r_name">{{r_name}}</h3>
+          <!-- Control buttons -->
+          <div id="myBtnContainer">
+            <button class="btn active text-danger" onclick="filterSelection('all')"> Show all</button>
+            <button class="btn text-danger" onclick="filterSelection('veg');    $('#sidebar, #content').classList.remove('active');$('.collapse.in').toggleClass('in');
+"> Veg</button>
+            <button class="btn text-danger" onclick="filterSelection('nveg')"> Non-veg </button>
+            <button class="btn text-danger" onclick="filterSelection('egg')"> Egg</button>
+          </div>
+          </div>
+          <div class="panel-body">
+            <div class="d-flex  flex-wrap p-4 ">
+          {%for d in iList %}
+          <div data-icard ="{{r_id}}:{{d.get('i_id','')}}" class="filterDiv {{d.get('i_type','')}} card p-4 m-2" style="width:400px " >
+          <div class="row">
+            <div class="col-sm-4">
+              <img class="rounded img-fluid" id="i_image" src="/static/data/item_images/{{d.get('i_image','defaultitem.jpeg')}}" alt="Item{{loop.index}} Image">         
+            </div>
+            <div class="col-sm-4">
+              <h5 class="card-title py-0"  id="i_name">{{d.i_name}}</h5>
+               <span style="font-family: verdana;">&#8377;</span><span id="i_cost">  {{d.i_cost}}</span>
+              
+              
+            </div>
+              <div class="col-sm-4 pr-2">
+                <div class="btn-group">
+          
+            <button value="{{ loop.index }}" class="btn btn-primary" onclick="dec(this);" data-i_id="{{d.get('i_id','')}}" data-r_id="{{r_id}}"> – </button>
+            <input type="button" class="btn btn-primary" value="0" data-riid ="{{r_id}}:{{d.get('i_id','')}}"  id="{{loop.index}}" >
+            <button  value="{{ loop.index }}" class="btn btn-primary" onclick="inc(this);" data-i_id="{{d.get('i_id','')}}" data-r_id="{{r_id}}"> + </button>
+          
+          </div>
+          
+          
+          </div>
+            
+            </div>
+          
+            </div>
+            
+            {% endfor %}
+            </div>
+            </div>
+  </div>
+            <a href="#" class="back-to-top  fixed-bottom " style="text-align:right;">
+              <i class="material-icons text-primary" style="font-size:48px;   ">arrow_upward</i>
+            </a>
+          </div>
+           {% endif %}
+            <script type="text/javascript">
+              filterSelection("all");
+                function filterSelection(c) {
+                  var x, i;
+                  x = document.getElementsByClassName("filterDiv");
+                  if (c == "all") c = "";
+                  // Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
+                  for (i = 0; i < x.length; i++) {
+                    w3RemoveClass(x[i], "show");
+                    if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+                  }
+                }
+
+                // Show filtered elements
+                function w3AddClass(element, name) {
+                  var i, arr1, arr2;
+                  arr1 = element.className.split(" ");
+                  arr2 = name.split(" ");
+                  for (i = 0; i < arr2.length; i++) {
+                    if (arr1.indexOf(arr2[i]) == -1) {
+                      element.className += " " + arr2[i];
+                    }
+                  }
+                }
+
+                // Hide elements that are not selected
+                function w3RemoveClass(element, name) {
+                  var i, arr1, arr2;
+                  arr1 = element.className.split(" ");
+                  arr2 = name.split(" ");
+                  for (i = 0; i < arr2.length; i++) {
+                    while (arr1.indexOf(arr2[i]) > -1) {
+                      arr1.splice(arr1.indexOf(arr2[i]), 1);
+                    }
+                  }
+                  element.className = arr1.join(" ");
+                }
+
+                // Add active class to the current control button (highlight it)
+                var btnContainer = document.getElementById("myBtnContainer");
+                var btns = btnContainer.getElementsByClassName("btn");
+                for (var i = 0; i < btns.length; i++) {
+                  btns[i].addEventListener("click", function () {
+                    var current = document.getElementsByClassName("active");
+                    current[0].className = current[0].className.replace(" active", "");
+                    this.className += " active";
+                  });
+                }
+
+          </script>
+          <style>
+            .container {
+    overflow: hidden;
+}
+
+.filterDiv {
+    float: left;
+    background-color:#ffffff;
+    width: 100px;
+    text-align: center;
+    margin: 2px;
+    display: none; /* Hidden by default */
+}
+
+/* The "show" class is added to the filtered elements */
+.show {
+    display: block;
+}
+
+/* Style the buttons */
+#myBtnContainer.btn {
+  border: none;
+  outline: none;
+  padding: 12px 16px;
+  background-color: #2196F3;
+  cursor: pointer;
+  color:black;
+}
+
+/* Add a light grey background on mouse-over */
+#myBtnContainer.btn:hover {
+  background-color: rgb(148, 106, 106);
+}
+
+/* Add a dark background to the active button */
+.btn.active {
+  background-color: #2196F3;
+  color: white;
+}
+
+
+          </style>
+   
+{% endblock %}
+

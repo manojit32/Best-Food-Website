@@ -1,0 +1,90 @@
+{% extends "_base.html" %}
+
+{% include '_header.html' %}
+{% include '_vactionbar.html' %}
+{% block content%}
+         {%if error%}
+        <h3>{{error}}</h3>
+        {%endif%}
+        <div class="container">
+        
+    {%if invoicelist is not none  and invoicelist|length > 0 %}
+    <div class="well bg-warning">
+        Your Orders
+    </div>
+    <div class="row">
+    {% for invoice in invoicelist %}
+    
+            <div class="card p-4">
+    <div class="p-5 container">
+    <div class="alert alert-success">
+        <div class="col-6 text-primary">
+        <b>Restaurant : </b>{{invoice["restaurant"]}}
+        </div>
+        <div class="col-6 text-secondary">
+        <b>Order Date : </b>{{invoice["date"]}}
+        </div>
+    </div>
+    <div class="d-flex flex-column justify-content-center">
+    <div class="row justify-content-center ">
+    <div class="col-sm-12">
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">S.No</th>
+                <!-- <th scope="col">Item ID</th> -->
+                <th scope="col">Item Name</th>
+                <th scope="col">Item Quantity</th>
+                <th scope="col">Item Price</th>
+            </tr>
+        </thead>
+        <tbody>
+    
+    {% for item in invoice["items"]%}
+                <tr>
+                    <th scope="row">{{loop.index}}</th>
+                    <!-- <td>{{item[0]}}</td> -->
+                    <td>{{item[1]}}</td>
+                    <td>{{item[2]}}</td>
+                    <td><span style="font-family: verdana;">&#8377;</span> {{item[3]}}</td>
+                </tr>    
+    {%endfor%}
+        </tbody>
+        </table>
+    </div>
+    </div>
+    </div>
+    <div class="row justify-content-end">
+    <!-- <div class="d-flex flex-row-reverse  p-4"> -->
+        <div class="col-sm-6">
+        <table class="table align-self-end">
+            <tbody>
+                <tr>
+                    <th scope="row">Tax  : </th>
+                    <td><span style="font-family: verdana;">&#8377;</span> {{invoice["tax"]}}</td>
+                </tr>
+                <tr>
+                    <th scope="row"> Total  :</th>
+                    <td><span style="font-family: verdana;">&#8377;</span> {{invoice["total"]}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- </div> -->
+    </div>
+
+    </div>
+    </div>
+    <br>
+
+     {% endfor %}
+    </div>
+     {% else %}
+<div class="well bg-warning">
+    Your have No Orders
+    </div>
+     {% endif %}
+     
+</div>
+    
+{% endblock%}

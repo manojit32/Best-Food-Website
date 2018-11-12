@@ -1,0 +1,258 @@
+{% extends "_base.html" %}
+{% block content%}
+    {% if header%} {% include '_header.html' %} {% endif %}
+    {% if d %}  {% endif %}
+    <div class="container-fluid ">
+        {% include '_flashmessages.html' %}
+    <form action="" method="POST" id="menuform">
+        <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <table class="table table-bordered table-hover" id="tab_logic">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    #
+                                </th>
+                                <th class="text-center">
+                                    Item Name
+                                </th>
+                                <th class="text-center">
+                                    Item Price
+                                </th>
+                                <th class="text-center">
+                                    Item Type
+                                </th>
+                                <th class="text-center">
+                                    Item Maincategory
+                                </th>
+                                <th class="text-center">
+                                    Item Sub Category 1
+                                </th>
+                                <th class="text-center">
+                                    Item Sub Category 2
+                                </th>
+                                <th class="text-center">
+                                   Item Image
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id='addr0'>
+                                <td>
+                                    1
+                                </td>
+                                <td>
+                                    <input type="text" name='i_name0' placeholder='Item Name' class="form-control" required/>
+                                </td>
+                                <td>
+                                    <input type="text" name='i_cost0' placeholder='Item Price' class="form-control" required/>
+                                </td>
+                                <td>
+                                    <div class="form-group col-auto">
+                                    <div class="lg">
+                                        <select name="i_type0" id="i_type" class="form-control-lg">
+                                            <option selected>Veg</option>
+                                            <option>Non-veg</option>
+                                            <option>Egg</option>
+                                            <option>Others</option>
+                                        </select>
+                                    </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group col-auto">
+                                        <div class="lg">
+                                            <select name="i_maincategory0" id="i_maincategory" class="form-control-lg">
+                                                <option selected>Others</option>
+                                                <option>Food</option>
+                                                <option>Beverages</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" name='i_subcategory10' placeholder='Item Sub Category 1' class="form-control" />
+                                </td>
+                                <td>
+                                    <input type="text" name='i_subcategory20' placeholder='Item Sub Category 2' class="form-control" />
+                                </td>
+                                <td>
+                                    <!-- <div class="form-group col-md-6" id="" style="display: inline;"> -->
+                                        <input name="0" id = "0" type="file" name="file" class="form-control" onchange="loadImageFileAsURL(this);" />
+
+                                    <!-- </div> -->
+                                </td>
+                            </tr>
+                            <tr id='addr1'></tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+            </form>
+                        <button id="addmenubuttonid" style="display: inline;" class="btn btn-primary" style="margin-right:auto;margin-left:auto;">Add Menu</button>
+            <a  id="add_row" class="btn btn-primary text-white pull-left">Add Row</a>
+            <a id='delete_row' class="btn btn-primary text-white pull-right">Delete Row</a>
+        <!-- <div class="d-flex justify-content-center">
+        <form action="/addmenu" method="POST">
+                <div class="form-row">
+                
+                <div class="form-group col-md-2">
+                        <label for="i_name">Item Name</label>
+                        <input name="i_name" type="text" class="form-control toggleperm" id="i_name">
+                </div>
+                <div class="form-group col-md-2">
+                        <label for="i_cost">Price</label>
+                        <input name="i_cost" type="text" class="form-control toggleperm" id="i_cost">
+                </div>
+                
+                <div class="form-group col-auto">
+                    <label for="i_type">Type</label>
+                    <div class="lg">
+                        <select name="i_type" id="i_type" class="form-control-lg">
+                            <option selected>Veg</option>
+                            <option>Non-veg</option>
+                            <option>Egg</option>
+                            <option>Others</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-auto">
+                    <label for="i_maincategory">Main Category</label>
+                    <div class="lg">
+                        <select name="i_maincategory" id="i_maincategory" class="form-control-lg" >
+                            <option selected>Others</option>
+                            <option>Food</option>
+                            <option>Beverages</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                        <label for="i_subcategory1">Subcategory1</label>
+                        <input name="i_subcategory1" type="text" class="form-control toggleperm" id="i_subcategory1"  >
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="i_subcategory2">Subcategory2</label>
+                    <input name="i_subcategory2" type="text" class="form-control toggleperm" id="i_subcategory2">
+                </div>
+                
+                </div>
+                <button type="submit" id="addmenubuttonid" style="display: block;" class="btn btn-primary" >save changes</button>
+  
+            </form>
+        </div> -->
+        
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" -->
+    <!-- crossorigin="anonymous"></script> -->
+<script src="/static/js/jquery.serializejson.js"></script>
+<script type="text/javascript">
+         $(document).ready(function () {
+                i = 1;
+                $("#add_row").click(function () {
+                    $('#addr' + i).html("<td>" +
+                        (i + 1) +
+                        "</td>" +
+                        "<td>" +
+                        "<input type='text' name='i_name" + i + "' placeholder='Item Name' class='form-control' required/>" +
+                        "</td>" +
+                        "<td>" +
+                        "<input type='text' name='i_cost" + i + "' placeholder='Item Price' class='form-control' required/>" +
+                        "</td>" +
+                        "<td>" +
+                        "<div class='form-group col-auto'>" +
+                        "<div class='lg'>" +
+                        "<select name='i_type" + i + "' class='form-control-lg'>" +
+                        "<option selected>Veg</option>" +
+                        "<option>Non-veg</option>" +
+                        "<option>Egg</option>" +
+                        "<option>Others</option>" +
+                        "</select>" +
+                        "</div>" +
+                        "</div>" +
+                        "</td>" +
+                        "<td>" +
+                        "<div class='form-group col-auto'>" +
+                        "<div class='lg'>" +
+                        "<select name='i_maincategory" + i + "' class='form-control-lg'>" +
+                        "<option selected>Others</option>" +
+                        "<option>Food</option>" +
+                        "<option>Beverages</option>" +
+                        "</select>" +
+                        "</div>" +
+                        "</div>" +
+                        "</td>" +
+                        "<td>" +
+                        "<input type='text' name='i_subcategory1" + i + "' placeholder='Item Sub Category 1' class='form-control' />" +
+                        "</td>" +
+                        "<td>" +
+                        "<input type='text' name='i_subcategory2" + i + "' placeholder='Item Sub Category 2' class='form-control' />" +
+                        "</td>"+
+                        "<td>"+
+                         
+                                "<input name='"+i+"' id='"+i+"' type='file' name='file' class='form-control' onchange='loadImageFileAsURL(this);' />"+
+
+                        "</td>");
+
+                    $('#tab_logic').append('<tr id="addr' + (i + 1) + '"></tr>');
+                    i++;
+                    console.log($('#menuform').serializeJSON());
+                });
+                $("#delete_row").click(function () {
+                    if (i > 1) {
+                        $("#addr" + (i - 1)).html('');
+                        i--;
+                    }
+                });
+                
+                $("#addmenubuttonid").click(function () {
+                  postJSON("/addmenu", ConvertFormToJSON($("#menuform")))
+
+                  console.log(JSON.stringify(ConvertFormToJSON($("#menuform"))));
+                    //$("#menuform").submit();
+             });
+            });
+
+            json = {};
+            function ConvertFormToJSON(form) {
+                    console.log("im in")
+                    var array = jQuery(form).serializeArray();
+                    var mainjson={};
+                    var i=0;
+                    
+
+                    jQuery.each(array, function () {
+                        json[this.name] = this.value || '';	
+                    });
+                    
+                    return json;
+                }
+
+           function loadImageFileAsURL(obj) {
+               //alert(obj.getAttribute("name"));
+               var image_key = obj.getAttribute("name");
+                var filesSelected = document.getElementById(image_key).files;
+                if (filesSelected.length > 0) {
+                    var fileToLoad = filesSelected[0];
+
+                    var fileReader = new FileReader();
+
+                    fileReader.onload = function (fileLoadedEvent) {
+                        //var textAreaFileContents = document.getElementById
+                         //   (
+                          //  "textAreaFileContents"
+                           // );
+                        json["i_image"+image_key] = fileLoadedEvent.target.result || '';	
+                        //alert(JSON.stringify(json));
+                        //alert(fileLoadedEvent.target.result)
+                        //textAreaFileContents.innerHTML = fileLoadedEvent.target.result;
+                    };
+
+                    fileReader.readAsDataURL(fileToLoad);
+                }
+            }
+
+
+    
+</script>
+{% endblock %}

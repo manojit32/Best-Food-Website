@@ -1,0 +1,111 @@
+{% extends "_base.html" %}
+{% block content%}
+    {% if header%} {% include '_header.html' %} {% endif %}
+     {% if session.email%} {% include '_vactionbar.html' %} {% endif %}
+     {% if d %}
+     {% if r %}
+        <div class="container-fluid">
+          <div class="row">
+          	<div class="col-sm-3" >
+             {% include '_sideFilter.html' %}
+         </div>
+            <div class="col-sm-9" id="main">
+                    
+                      {%for key,value in d.items() %} {% set loop_index = loop %}
+                       
+                      <div class="panel panel-primary">
+                      <div class="card p-4">
+                        <div class="row">
+                    
+                          <div class="col-sm-12 p-0">
+                          	{% set temp = key %}
+                            <div class="panel-heading bg-warning"><h4 class="card-title py-0">{{ r[key] }}</h4></div>
+                          </div>
+                        </div>
+
+                        <div class="panel-body">
+                         <div class="row">
+                        {%for item in d[key]%}
+                        <div data-icard="{{key}}:{{item.get('i_id','')}}" class="card p-4 m-2" style="width:400px ">
+                          <div class="row">
+                            <div class="col-sm-4">
+                              <img class="rounded img-fluid" id="i_image" src="/static/data/item_images/{{item.get('i_image','defaultitem.jpeg')}}">
+                            </div>
+                            <div class="col-sm-4">
+                              <h5 class="card-title py-0" id="i_name">{{item["i_name"]}}</h5>
+                              <span style="font-family: verdana;">&#8377;</span>
+                              <span id="i_cost"> {{item["i_cost"]}}</span>
+                    
+                            </div>
+                            <div class="col-sm-4 pr-2">
+                              <div class="btn-group">
+                    
+                                <button value="{{ loop_index.index|string }}:{{loop.index|string }}" class="btn btn-primary" onclick="dec(this)" data-i_id="{{item.get('i_id','')}}"
+                                  data-r_id="{{key}}"> – </button>
+                                <input type="button" class="btn btn-primary" value="0" id="{{ loop_index.index|string }}:{{loop.index|string }}" data-riid="{{key}}:{{item.get('i_id','')}}">
+                                <button value="{{ loop_index.index|string }}:{{loop.index|string }}" class="btn btn-primary" onclick="inc(this)" data-i_id="{{item.get('i_id','')}}"
+                                  data-r_id="{{key}}"> + </button>
+                    
+                              </div>
+                            </div>
+                    
+                          </div>
+                    
+                        </div>
+                        <br> {% endfor %}
+                    </div>
+                    </div>
+                      </div>
+                      </div>
+                      {% endfor %}
+                      
+                    
+                    
+            </div>
+
+      </div>
+
+          </div>
+
+           {% endif %}
+           {% endif %}
+
+      <script>
+        function getQueryStringValue(key) {
+            return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+          }  
+        function parity(val) {
+            return (val == null || val === false);
+          }
+        var form = document.getElementById('filterForm');
+          if (form != null) {
+            maxp= getQueryStringValue("maxprice");
+            minp= getQueryStringValue("minprice");
+            sort = document.getElementById("sortFilter").value;
+            //alert("sort");
+           if (maxp>0){
+             document.getElementById("maxprice").value=maxp;
+           }
+           if (minp>0) {
+              document.getElementById("minprice").value = minp;
+           }
+
+           var textToFind = sort;
+
+            var dd = document.getElementById('sortFilter');
+
+            for (var i = 0; i < dd.options.length; i++) {
+              //alert(dd.options[i].value +'##########'+ textToFind)
+              if (dd.options[i].value === textToFind) {
+                dd.selectedIndex = i;
+                break;
+              }
+            }
+          }
+       
+
+      </script>
+          
+
+{% endblock %}
+

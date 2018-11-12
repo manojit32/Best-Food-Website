@@ -1,0 +1,25 @@
+<div class="dropdown">
+    <button class="btn btn-outline-warning dropdown-toggle" type="button" data-useremail="{{username}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      {% if username %} {{username}} {% else %} user {% endif %}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <button class="dropdown-item" type="button">
+        <a href="{{ url_for('viewprofile') }}">
+        <i class="material-icons" style="font-size:15px">person</i> 
+        Profile
+        </a>
+      </button>
+      <!-- <button class="dropdown-item" type="button">
+        <a href="/settings/"></a>
+        <i class="material-icons" style="font-size:15px">settings</i> Settings
+        </a>
+      </button> -->
+      <button class="dropdown-item" type="button">
+          <a href="{{ url_for('logout') }}">
+            <i class="material-icons" style="font-size:15px">power_settings_new	
+          </i> Logout
+          </a>
+      </button>
+      
+    </div>
+  </div>

@@ -1,0 +1,365 @@
+<!-- CSS Styles -->
+<!doctype html>
+<html lang="en">
+  <head>
+  </head>
+<body>
+<style>
+  .speech {border: 1px solid #DDD; width: 300px; padding: 0; margin: 0}
+  .speech input {border: 0; width: 240px; display: inline-block; height: 30px;padding-right :5; margin: 5;}
+  .speech i {float: right; width: 40px ;padding-top: 3px;}
+  .location {border: 1px solid #DDD; width: 300px;}
+  .location input {border: 0; width: 240px; display: inline-block; height: 30px; padding-left:5; margin: 5;padding-left:5; margin: 5}
+  .location i {float: right; width: 40px ;padding-top: 3px;}
+</style>
+
+<!-- Search Form -->
+<div id="support"></div>
+<div id="divStatus"></div>
+<form name="microphoneForm" id="labnol" autocomplete="off" method="get" action="/search">
+  
+  <div style="display: flex">
+  <div class="autocomplete speech">
+    <input type="text" name="q" id="transcript" placeholder="Tap on icon to place order" onkeyup="getSuggestions(this)" value='{{q}}' onchange="this.form.submit()" />
+    <!-- <img onclick="startDictation()" src="//i.imgur.com/cHidSVu.gif" /> -->
+    <i onclick="startDictation()" class="material-icons" style="color:white">mic</i>
+
+
+  </div>
+
+  <div class="location">
+       
+    <input  type="text" name="location" id="transcript1" placeholder="enter your delivery location" value='{{location}}' onchange="this.form.submit()" />
+  
+    <i onclick="init()" class="material-icons" style="color:white">edit_location</i>
+  </div>
+
+  </div>
+
+</form>
+
+<!-- HTML5 Speech Recognition API -->
+<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+<script>
+  function startDictation() {
+
+    if (window.hasOwnProperty('webkitSpeechRecognition')) {
+
+      var recognition = new webkitSpeechRecognition();
+
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.lang = "en-US";
+      recognition.start();
+      document.getElementById('transcript').value = 'listening...';
+      recognition.onresult = function(e) {
+        document.getElementById('transcript').value
+                                 = e.results[0][0].transcript;
+        recognition.stop();
+        document.getElementById('labnol').submit();
+        document.microphoneForm.submit();
+
+      };
+
+      recognition.onerror = function(e) {
+        recognition.stop();
+      }
+
+    }
+  }
+ 
+    items = [];
+    response =""
+    function getSuggestions(obj){
+      console.log("Im in getsuggestions")
+      if(obj.value.length>0){
+      loadDoc2('/autosuggest/' + obj.value, displayFeedback,items);
+      }
+    }
+    function displayFeedback(response,items) {
+                    console.log("Im in 2display" +items);
+      var temp= JSON.parse(response.responseText);
+      for (var i = 0; i < temp.length; i++) {
+       if (!(items.includes(temp[i]))) {
+          console.log(temp[i]);
+          items.push(temp[i]);
+        }
+      }
+      
+       
+    autocomplete(document.getElementById("transcript"), items);
+
+      }
+    function loadDoc2(url, cFunction,items) {
+        var xhttp;
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            cFunction(this,items);
+          }
+        };
+        xhttp.open("GET", url, true);
+        xhttp.send();
+      }
+      function autocomplete(inp, arr) {
+          /*the autocomplete function takes two arguments,
+          the text field element and an array of possible autocompleted values:*/
+          var currentFocus;
+          /*execute a function when someone writes in the text field:*/
+          inp.addEventListener("input", function (e) {
+            var a, b, i, val = this.value;
+            /*close any already open lists of autocompleted values*/
+            closeAllLists();
+            if (!val) { return false; }
+            currentFocus = -1;
+            /*create a DIV element that will contain the items (values):*/
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
+            /*append the DIV element as a child of the autocomplete container:*/
+            this.parentNode.appendChild(a);
+            /*for each item in the array...*/
+            for (i = 0; i < arr.length; i++) {
+              /*check if the item starts with the same letters as the text field value:*/
+              //if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) 
+              var match= (arr[i].toUpperCase()).indexOf(val.toUpperCase());
+              if ((match)!=-1){
+               //if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                /*create a DIV element for each matching element:*/
+                b = document.createElement("DIV");
+                /*make the matching letters bold:*/
+                if (match==0){
+                b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                b.innerHTML += arr[i].substr(val.length);
+                 /*insert a input field that will hold the current array item's value:*/
+                  b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                  /*execute a function when someone clicks on the item value (DIV element):*/
+                  b.addEventListener("click", function (e) {
+                    /*insert the value for the autocomplete text field:*/
+                    inp.value = this.getElementsByTagName("input")[0].value;
+                    /*close the list of autocompleted values,
+                    (or any other open lists of autocompleted values:*/
+                    closeAllLists();
+                  });
+                  
+                }
+                else{
+                  b.innerHTML = arr[i].substr(0, match) ;
+                  b.innerHTML += "<strong>" + arr[i].substr(match, val.length) + "</strong>" ;
+                  b.innerHTML += arr[i].substr(match+val.length);
+                   /*insert a input field that will hold the current array item's value:*/
+                  b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                  /*execute a function when someone clicks on the item value (DIV element):*/
+                  b.addEventListener("click", function (e) {
+                    /*insert the value for the autocomplete text field:*/
+                    inp.value = this.getElementsByTagName("input")[0].value;
+                    document.microphoneForm.submit();
+                    /*close the list of autocompleted values,
+                    (or any other open lists of autocompleted values:*/
+                    closeAllLists();
+                  });
+                  
+                }
+               
+                a.appendChild(b);
+              }
+            }
+          }
+          );
+          /*execute a function presses a key on the keyboard:*/
+          inp.addEventListener("keydown", function (e) {
+            var x = document.getElementById(this.id + "autocomplete-list");
+            if (x) x = x.getElementsByTagName("div");
+            if (e.keyCode == 40) {
+              /*If the arrow DOWN key is pressed,
+              increase the currentFocus variable:*/
+              currentFocus++;
+              /*and and make the current item more visible:*/
+              addActive(x);
+            } else if (e.keyCode == 38) { //up
+              /*If the arrow UP key is pressed,
+              decrease the currentFocus variable:*/
+              currentFocus--;
+              /*and and make the current item more visible:*/
+              addActive(x);
+            } else if (e.keyCode == 13) {
+              /*If the ENTER key is pressed, prevent the form from being submitted,*/
+              //e.preventDefault();
+              if (currentFocus > -1) {
+                /*and simulate a click on the "active" item:*/
+                if (x) x[currentFocus].click();
+              }
+            }
+          });
+          function addActive(x) {
+            /*a function to classify an item as "active":*/
+            if (!x) return false;
+            /*start by removing the "active" class on all items:*/
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+            /*add class "autocomplete-active":*/
+            x[currentFocus].classList.add("autocomplete-active");
+          }
+          function removeActive(x) {
+            /*a function to remove the "active" class from all autocomplete items:*/
+            for (var i = 0; i < x.length; i++) {
+              x[i].classList.remove("autocomplete-active");
+            }
+          }
+          function closeAllLists(elmnt) {
+            /*close all autocomplete lists in the document,
+            except the one passed as an argument:*/
+            var x = document.getElementsByClassName("autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+              if (elmnt != x[i] && elmnt != inp) {
+                x[i].parentNode.removeChild(x[i]);
+              }
+            }
+          }
+          /*execute a function when someone clicks in the document:*/
+          document.addEventListener("click", function (e) {
+            closeAllLists(e.target);
+          });
+        }
+
+                autocomplete(document.getElementById("transcript"), items);
+
+    var startPos;
+  var map;
+
+  function init() {
+
+      if (navigator.geolocation) {
+         
+          navigator.geolocation.getCurrentPosition(updateLocation, handleLocationError, {
+              timeout: 50000
+          });
+         
+
+      } else {
+          document.getElementById("support").innerHTML = "<p style='color:red'>Oops! This browser does not support HTML5 Geolocation</p>";
+      }
+  }
+
+  function updateLocation(position) {
+      startPos = position;
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+
+      var request=new XMLHttpRequest();
+
+      request.open("GET",'/'+latitude+'/'+longitude, true);
+      request.send();
+      request.responseType='text';
+
+       request.onload=function()
+       {
+           temp3=JSON.parse(request.response);
+           console.log(temp3)
+           document.getElementById("transcript1").value=temp3
+           if(temp3.length>0)
+           {
+
+               document.microphoneForm.submit();
+
+           }
+           else
+           {
+               alert(temp3);
+           }
+           document.microphoneForm.submit();
+
+       }
+
+
+      var coords = new google.maps.LatLng(latitude, longitude);
+
+      var mapOptions = {
+          zoom: 10,
+          center: coords,
+          mapTypeControl: false,
+          navigationControlOptions: {
+              style: google.maps.NavigationControlStyle.SMALL
+          },
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+
+  
+
+      var marker = new google.maps.Marker({
+          position: coords,
+          map: map,
+          title: "Your current location!"
+      });
+
+  }
+
+  function handleLocationError(error) {
+      switch (error.code) {
+          case 0:
+              updateStatus("There was an error while retrieving your location: " + error.message);
+              break;
+
+          case 1:
+              updateStatus("The user prevented this page from retrieving the location.");
+              break;
+
+          case 2:
+              updateStatus("The browser was unable to determine your location: " + error.message);
+
+              break;
+
+          case 3:
+
+              updateStatus("The browser timed out before retrieving the location.");
+
+              break;
+      }
+  }
+
+  function updateStatus(msg) {
+      document.getElementById("divStatus").innerHTML = msg;
+  }
+
+
+
+
+</script>
+<style>
+
+  .autocomplete {
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: inline-block;
+}
+
+  .autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9; 
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+}
+</style>
+</body>

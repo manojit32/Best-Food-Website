@@ -1,0 +1,100 @@
+{% extends "_base.html" %}
+{% block content%}
+    {% if header%} {% include '_header.html' %} {% endif %}
+    {% include '_vactionbar.html' %}
+    <div class="container-fluid">
+    <h1>{{mail_id}}</h1>
+    <hr>
+     {% include '_flashmessages.html' %}
+	<div class="row">
+      <!-- left column -->
+      <div class="col-md-3">
+        <div class="text-center">
+          {% if profile_pic %}
+          <form action="/viewprofile" class="form-horizontal" role="form" method="POST" enctype="multipart/form-data">
+          <img src="{{ profile_pic }}" class="" alt="User Image" style="width: 100%;height: 90%;">
+          <div class="form-group col-md-9" id="UpdateImage" style="display:none;">
+            <label for="file">Upload Profile</label>
+            <input type="file" name="file" class="form-control" onchange="readURL(this);" />
+          </div>
+           {% else %}
+          <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
+          {% endif %}
+        </div>
+      </div>
+      
+      <!-- edit form column -->
+      <div class="col-md-9 personal-info">
+        <h3>Personal info</h3>
+        
+          
+          <div class="form-group">
+            <label class="col-lg-3 control-label">First name:</label>
+            <div class="col-lg-8">
+              <input name="first name" class="form-control toggleperm" type="text" value="{{ u_details.get('u_fname','') }}" readonly>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Last name:</label>
+            <div class="col-lg-8">
+              <input name="last name" class="form-control toggleperm" type="text" value="{{ u_details.get('u_lname','') }}" readonly>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">mobile</label>
+            <div class="col-lg-8">
+              <input name="mobile" class="form-control toggleperm" type="text" value="{{ u_details.get('u_mobile','') }}" readonly>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Address</label>
+            <div class="col-lg-8">
+              <input name="Address" class="form-control toggleperm" type="text" value="{{ u_details.get('u_address','') }}" readonly>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Email:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="{{ mail_id }}" readonly>
+            </div>
+          </div>
+       
+          
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <input id="edit1" type="button" class="btn btn-primary" onclick="fun()" value="Edit profile" style="display:block;">
+              <input id="edit2" type="submit" class="btn btn-primary"  value="Save changes" style="display:none;"> 
+              <button type="button" id="myButton3" style="display: none;" class="btn btn-secondary" onclick="window.location.reload()">cancel</button>
+
+              <span></span>
+              
+            </div>
+          </div>
+          
+         
+        </form>
+      </div>
+  </div>
+</div>
+<hr>
+<script>
+//$(document).ready(function() {
+function fun() {
+  
+  var city= $(".toggleperm").val();
+  console.log()
+ 
+  	console.log("kishore")
+     $(".toggleperm").attr("readonly", false);
+     document.getElementById("edit1").style.display="none";
+     document.getElementById("edit2").style.display="inline";
+     document.getElementById("myButton3").style.display = "inline";
+     document.getElementById("UpdateImage").style.display = "block";
+
+      
+ }
+
+</script>
+{% endblock %}

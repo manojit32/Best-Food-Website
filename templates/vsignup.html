@@ -1,0 +1,56 @@
+{% extends "_base.html" %}
+{% block content%}
+    {% include '_header.html' %}
+    
+    <div class="jumbotron bg-info">
+
+        <div class="d-flex flex-column  p-8 col-md-offset-4 ">
+             {% with messages = get_flashed_messages(with_categories=True) %} {% if messages %} {% for message in messages %}
+            <div class="alert alert-{{ message[0] }}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message[1] }}
+            </div>
+            {% endfor %} {% endif %} {% endwith %}
+        <form action="/vsignup" method="POST" onsubmit="return checkForm(this);">
+            <div class="d-flex flex-column">
+                {%if l_error%}
+                <p>Account Already Exists</p>
+                {%endif%}
+            <div class="col-sm-5 my-1">
+                    <label class="sr-only" for="u_name">Name</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">&#128104;</div>
+                        </div>
+                        <input type="email" class="form-control" id="u_name" name="u_name" placeholder="Username" required>
+                    </div>
+                </div>
+                <div class="col-sm-5 my-1">
+                    <label class="sr-only" for="u_password">Password</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">&#10095;</div>
+                        </div>
+                        <input type="password" class="form-control" id="u_password" name="u_password" placeholder="Password" required>
+                    </div>
+                </div>
+                <div class="col-sm-5 my-1">
+                    <label class="sr-only" for="u_c_password">Confirm Password</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">&#10095;</div>
+                        </div>
+                        <input type="password" class="form-control" id="u_c_password" name="u_c_password" placeholder="Confirm Password" required>
+                    </div>
+                </div>
+                {%if p_error%}
+                <p>passwords don’t match</p>
+                {%endif%}
+                <div class="col-auto my-1">
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    </div>
+{% endblock%}

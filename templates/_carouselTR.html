@@ -1,0 +1,33 @@
+
+<!-- <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/carousel')}}"> -->
+<style type="text/css"></style>
+<script type="text/javascript">
+  function getRestaurant(restaurant) {
+    s = "/"+restaurant+"/showitems"
+       window.open(s, "_self")
+
+  }
+</script>
+
+<!--  -->
+<div class="carousel-wrapper">
+  <div class="carousel" data-flickity='{ "initialIndex": 2,"autoPlay": true }'>
+    {% if TopRated %}
+    {% for r_id in TopRated %}
+      <div class="carousel-cell" style="padding-right:5%;">
+              <div class="card m-2 " style="width:200px;height: 200px;">
+
+        <div class="card-header bg-primary"><h6 style="text-align: center;">{{ TopRated[r_id][0]}}</h6></div>
+          {% if TopRated[r_id][1]==None %}
+            {% set rImage='default.jpg'%}
+          {% else %}
+            {% set rImage= TopRated[r_id][1] %}
+          {% endif %}
+        <img  src="/static/data/restaurant_images/{{rImage}}"
+          alt="{{rImage}}" style="width: 200px;height: 200px;padding:10px" onclick="getRestaurant('{{ r_id }}')">
+        </div>
+      </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+</div>

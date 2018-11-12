@@ -1,0 +1,41 @@
+{% extends "_base.html" %}
+{% block content%}
+    {% include '_header.html' %}
+     
+    <div class="jumbotron">
+        <div class="d-flex flex-column  p-8 col-md-offset-4">
+        {% include '_flashmessages.html' %}
+        <form action="/login/" method="POST">
+            <div class="d-flex flex-column ">
+                {%if l_error%}
+                <p>No Such User Exists</p>
+                {%endif%}
+            <div class="col-sm-5 my-1">
+                    <label class="sr-only" for="u_name">Name</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">&#128104;</div>
+                        </div>
+                        <input type="email" class="form-control" id="u_name" name="u_name" placeholder="Username" required="" oninvalid="this.setCustomValidity('Please Enter valid email')" oninput="setCustomValidity('')">
+                    </div>
+                </div>
+                <div class="col-sm-5 my-1">
+                    <label class="sr-only" for="u_password">Password</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">&#10095;</div>
+                        </div>
+                        <input type="password" class="form-control" id="u_password"  name="u_password"placeholder="Password" required="" oninvalid="this.setCustomValidity('Please Enter valid password')" oninput="setCustomValidity('')">
+                    </div>
+                </div>
+                {%if p_error%}
+                <p>passwords don’t match</p>
+                {%endif%}
+                <div class="col-auto my-1">
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+            </div>  
+            </div>
+        </form>
+        </div>
+    </div>  
+{% endblock%}

@@ -1,0 +1,89 @@
+{% extends "_base.html" %}
+ {% include '_header.html' %} {% include '_vactionbar.html' %}
+{% block content%}
+
+{% if error==0 %}
+<div class="container" id="maincontainer">
+ {% include '_flashmessages.html' %}
+
+
+<div class="row">
+<div class="col-auto pr-0">
+<img src="/static/media/{{'source.png'}}"  class="img-rounded" alt="Cinque Terre" width="60" height="60">
+</div>
+<div class="col-sm-8 pl-0" >
+<div class="col-auto pl-0" >
+
+<div class="row " id="scooter" style="padding-left: 10%">
+
+<img src="/static/media/{{'scooter.jpg'}}" class="img-rounded" alt="Cinque Terre" width="50" height="50" >
+</div>
+   <div class="progress" >
+  
+    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0"  id="pb" aria-valuemax="100" style="width:10%">
+      <span class="sr-only">10% Complete</span>
+       
+    </div>
+	     
+</div>
+</div>
+</div>
+<div class="col-auto pl-0">
+<img src="/static/media/{{'destination.jpg'}}"  class="img-rounded" alt="Cinque Terre" width="60" height="60">
+</div>
+ 
+ </div>
+
+    <h3>Thanks for Ordering with us. Our panther is on its way.</h3>
+ <script>
+       //alert("success");
+       localStorage.removeItem('dataObject{{session.email}}');
+       setInterval(runScooter,3000);
+       function runScooter(){
+       	// alert("dfdf");
+       	       	// alert(document.getElementById("scooter").style.paddingLeft);
+
+       	var temp = document.getElementById("scooter").style.paddingLeft;
+       	temp= temp.replace('%','')
+       	// if (temp=="100"){
+       	// 	temp=0;
+       	// }
+       	 document.getElementById("scooter").style.paddingLeft = String(Number(temp)+10)+'%';
+
+
+       	var temp2 = document.getElementById("pb").style.width;
+       	temp2= temp2.replace('%','')
+       	document.getElementById("pb").style.width = String(Number(temp2)+10)+'%';
+
+       	 
+       	 if (document.getElementById("scooter").style.paddingLeft==="100%"){
+       	 	var d = new Date();
+       		 document.getElementById("maincontainer").innerHTML= "<h3><i class='material-icons' style='font-size:48px;color:green'>done</i>  Your order is successfully delivered on "+d+"</h3>"
+       	}
+
+
+
+
+
+
+       }
+
+</script>
+
+  </div>
+ {% else %}
+	<div class="container" id="maincontainer">
+	 {% include '_flashmessages.html' %}
+	  <a class="btn btn-primary" href="/getcheckoutform" role="button">Checkout</a>
+    <script>
+	    alert("The restaurant doesn't deliver here.");
+	</script>
+	</div>
+{% endif %}
+
+    
+   
+
+
+
+{%endblock%}

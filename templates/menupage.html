@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+  <style>
+  body {
+      position: relative; 
+  }
+  </style>
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">  
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#section1">Starters</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#section2">main course</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#section3">rice and biryani</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#section4">fried rice
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#section5">rayalseema special dishes
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="#section6">fry dishes
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#section7">Accompaniment
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#section8">Deserts and bevarages
+      </a>
+    </li>
+  </ul>
+</nav>
+
+
+<div id="section1" class="container-fluid" style="padding-top:70px;padding-bottom:70px">
+  <span>starters</span>
+  <div class="container-fluid">
+  <div class="card pt-2 pl-2" style="width:400px ">
+  <div class="row">
+    <div class="col-sm-8">
+      <h6 class="card-title py-0" id="i_name">chilli chicken</h6>
+      <span id="i_cost">219 onwards</span>
+    </div>
+       <div class="col-sm-4 ">
+        <div class="btn-group">  
+    <button class="btn btn-primary" value="{{loop.index}}"  onclick="dec(this)"> – </button>
+    <input type="button" class="btn btn-primary" value="0" id="{{loop.index}}" >
+    <button class="btn btn-primary"  value="{{loop.index}}" onclick="inc(this)"> + </button> 
+  </div>
+  </div> 
+    </div>
+    </div>
+  </div>
+</div>
+<div id="section2" class="container-fluid" style="padding-top:70px;padding-bottom:70px">
+  <span>main course</span>
+<div class="container-fluid">
+ 
+  <div class="card pt-2 pl-2" style="width:400px ">
+  <div class="row">
+
+    <div class="col-sm-8">
+      <h6 class="card-title py-0" id="i_name">chicken biryani</h6>
+      <span id="i_cost">319 onwards</span> 
+    </div>
+       <div class="col-sm-4 ">
+        <div class="btn-group">
+  
+    <button class="btn btn-primary" value="{{loop.index}}" onclick="dec(this)"> – </button>
+    <input type="button" class="btn btn-primary" value="0" id="{{loop.index}}" >
+    <button class="btn btn-primary" value="{{loop.index}}" onclick="inc(this)"> + </button>
+  </div>
+  </div> 
+    </div>
+    </div>  
+  </div>  
+</div>
+<div id="section3" class="container-fluid " style="padding-top:70px;padding-bottom:70px">
+  <span>rice and biryani</span>
+    <div class="container-fluid">
+ 
+  <div class="card pt-2 pl-2" style="width:400px ">
+  <div class="row">
+
+    <div class="col-sm-8">
+      <h6 class="card-title py-0" id="i_name">chicken rice</h6>
+      <span id="i_cost">119 onwards</span>  
+    </div>
+       <div class="col-sm-4 ">
+        <div class="btn-group">
+  
+    <button class="btn btn-primary" value="{{loop.index}}" onclick="dec(this)"> – </button>
+    <input type="button" class="btn btn-primary" value="0" id="{{loop.index}}" >
+    <button class="btn btn-primary" value="{{loop.index}}" onclick="inc(this)"> + </button>
+  
+  </div>
+  </div> 
+    </div>
+    </div>
+  </div>
+ 
+</div>
+<div id="section4" class="container-fluid " style="padding-top:70px;padding-bottom:70px">
+  <span>fried rice </span>
+   <div class="container-fluid"> 
+  <div class="card pt-2 pl-2" style="width:400px ">
+  <div class="row">
+    <div class="col-sm-8">
+      <h6 class="card-title py-0" id="i_name">chicken fried rice</h6>
+      <span id="i_cost">99 onwards</span>
+    </div>
+       <div class="col-sm-4 ">
+        <div class="btn-group">  
+    <button class="btn btn-primary" value="{{loop.index}}" onclick="dec(this)"> – </button>
+    <input type="button" class="btn btn-primary" value="0" id="{{loop.index}}" >
+    <button class="btn btn-primary" value="{{loop.index}}" onclick="inc(this)"> + </button>  
+  </div>
+  </div> 
+    </div>
+    </div>
+  </div>
+</div>
+<div id="section5" class="container-fluid " style="padding-top:70px;padding-bottom:70px">
+  <span>rayalseema special dishes</span>
+    <div class="container-fluid">
+ 
+  <div class="card pt-2 pl-2" style="width:400px ">
+  <div class="row">
+
+    <div class="col-sm-8">
+      <h6 class="card-title py-0" id="i_name">rayalseema chicken</h6>
+      <span id="i_cost">289 onwards</span> 
+    </div>
+       <div class="col-sm-4 ">
+        <div class="btn-group">
+  
+    <button class="btn btn-primary" value="{{loop.index}}" onclick="dec(this)"> – </button>
+    <input type="button" class="btn btn-primary" value="0" id="{{loop.index}}" >
+    <button class="btn btn-primary" value="{{loop.index}}" onclick="inc(this)"> + </button>
+  
+  </div>
+  </div> 
+    </div>
+    </div>
+  </div>
+ 
+</div>
+<div id="section6" class="container-fluid " style="padding-top:70px;padding-bottom:70px">
+  <span>fry dishes</span>
+   <div class="container-fluid">
+ 
+  <div class="card pt-2 pl-2" style="width:400px ">
+  <div class="row">
+
+    <div class="col-sm-8">
+      <h6 class="card-title py-0" id="i_name">chicken fry</h6>
+      <span id="i_cost">119 onwards</span>
+    </div>
+       <div class="col-sm-4 ">
+        <div class="btn-group">
+  
+    <button class="btn btn-primary" value="{{loop.index}}" onclick="dec(this)"> – </button>
+    <input type="button" class="btn btn-primary" value="0" id="{{loop.index}}" >
+    <button class="btn btn-primary" value="{{loop.index}}" onclick="inc(this)"> + </button>
+  
+  </div>
+  </div> 
+    </div>
+    </div>
+  </div>
+ 
+</div>
+<div id="section7" class="container-fluid " style="padding-top:70px;padding-bottom:70px">
+  <span>Accompaniment </span>
+    <div class="container-fluid">
+ 
+  <div class="card pt-2 pl-2" style="width:400px ">
+  <div class="row">
+
+    <div class="col-sm-8">
+      <h6 class="card-title py-0" id="i_name">curd</h6>
+      <span id="i_cost">40 onwards</span>
+      
+      
+    </div>
+       <div class="col-sm-4 ">
+        <div class="btn-group">
+  
+    <button class="btn btn-primary" value="{{loop.index}}" onclick="dec(this)"> – </button>
+    <input type="button" class="btn btn-primary" value="0" id="{{loop.index}}" >
+    <button class="btn btn-primary" value="{{loop.index}}" onclick="inc(this)"> + </button>
+  
+  </div>
+  </div> 
+    </div>
+    </div>
+  </div>
+ 
+</div>
+<div id="section8" class="container-fluid " style="padding-top:70px;padding-bottom:70px">
+  <span>Desert and Bevarages </span>
+  <div class="container-fluid">
+  <div class="card pt-2 pl-2" style="width:400px ">
+  <div class="row">
+    <div class="col-sm-8">
+      <h6 class="card-title py-0" id="i_name">thumsup</h6>
+      <span id="i_cost">50 onwards</span> 
+    </div>
+       <div class="col-sm-4 ">
+        <div class="btn-group">
+  
+    <button class="btn btn-primary" value="{{loop.index}}" onclick="dec(this)"> – </button>
+    <input type="button" class="btn btn-primary" value="0" id="{{loop.index}}" >
+    <button class="btn btn-primary" value="{{loop.index}}" onclick="inc(this)"> + </button>
+  
+  </div>
+  </div> 
+    </div>
+    </div>
+  </div>
+</div>
+ <script type="text/javascript">
+    function inc(obj)
+    {
+      var id=obj.value;
+      var value = parseInt(document.getElementById(id).value);
+      document.getElementById(id).value = ++value;   
+    }
+    function dec(obj)
+    {
+      var id=obj.value;
+      var value = parseInt(document.getElementById(id).value);
+      if (value>0) {
+        document.getElementById(id).value = --value;
+      }
+      else
+      {
+        value=0;
+      }
+    }
+  </script>
+</body>
+</html>

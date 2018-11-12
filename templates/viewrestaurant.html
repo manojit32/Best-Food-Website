@@ -1,0 +1,93 @@
+{% extends "_base.html" %}
+{% block content%}
+    {% if header%} {% include '_header.html' %} {% endif %}
+    {% if d %}  {% endif %}
+    <div class="container-fluid ">
+        {% include '_flashmessages.html' %}
+             {% include '_vactionbar.html' %}
+
+        <div class="d-flex justify-content-center">
+        <form action="/viewrestaurant" method="POST" enctype="multipart/form-data">
+                <div class="form-row ">
+                <!-- <div class="form-group col-md-6" id="renderImage"> -->
+                <!-- <img id="Image" src="" alt="Restaurant Image" readonly /> -->
+                <img src="/static/data/restaurant_images/{{d.get('r_images','')}}" alt="Restaurant Image" class="form-control" id="r_image" name="r_image" style="width: 200px;height: 200px;"
+                    readonly>
+                <!-- </div> -->
+                <div class="form-group col-md-6" id="UpdateImage" style="display:none;">
+                    <label for="file">Upload Image</label>
+                    <input type="file" name="file" class="form-control" onchange="readURL(this);" />
+                </div>
+                </div>
+                <div class="form-row">
+                <div class="form-group col-md-6">
+                        <label for="r_name">Name</label>
+                        <input name="r_name" type="text" class="form-control toggleperm" id="r_name" value="{{d.get('r_name','')}}" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                        <label for="r_phone">Phone</label>
+                        <input name="r_phone" type="text" class="form-control toggleperm" id="r_phone" value="{{d.get('r_phone','')}}" readonly>
+                </div>
+                </div>
+                 <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="r_email">Email</label>
+                    <input name="r_email" type="email" class="form-control toggleperm" id="r_email" value="{{d.get('r_email','')}}" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                        <label for="r_website">Website</label>
+                        <input name="r_website" type="text" class="form-control toggleperm" id="r_website" value="{{d.get('r_website','')}}" readonly>
+                </div>
+                
+                </div>
+                <div class="form-row">
+                <div class="form-group col-md-12">
+                <label for="r_address">Address</label>
+                <input name="r_address" type="text" class="form-control toggleperm" id="r_address" value="{{d.get('r_address','')}}" readonly>
+                </div>
+                </div>
+               
+            
+                <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="r_location">Location</label>
+                    <div class="lg">
+                    <select name="r_location" id="r_location" class="form-control-lg" value="{{d.get('r_location','')}}" readonly>
+                    <option selected>Gachibowli</option>
+                    <option>KukatPally</option>
+                    <option>HITEC City</option>
+                    <option>Ameerpet</option>
+                    </select>
+                </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="r_city">City</label>
+                    <input name="r_city" type="text" class="form-control toggleperm" id="r_city" required value="{{d.get('r_city','')}}" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="r_zip">Zip</label>
+                    <input name="r_zip" type="text" class="form-control toggleperm" id="r_zip" required value="{{d.get('r_zip','')}}" readonly>
+                </div>
+                </div>
+                <button type="button" id="myButton1" class="btn btn-primary" onclick="fun()" >update details</button>
+                <button type="submit" id="myButton2" style="display: none;" class="btn btn-primary" >save changes</button>
+                <button type="button" id="myButton3" style="display: none;" class="btn btn-secondary" onclick="window.location.reload()">cancel</button>
+  
+            </form>
+        </div>
+        </div>
+        <script>
+            function fun() {
+                
+                    $(".toggleperm").attr("readonly", false);
+                    document.getElementById("myButton1").style.display="none";
+                    document.getElementById("myButton2").style.display="inline";
+                    document.getElementById("myButton3").style.display="inline";
+                    document.getElementById("UpdateImage").style.display = 'inline';
+               
+            }
+           
+       
+ 
+        </script>
+{% endblock %}
