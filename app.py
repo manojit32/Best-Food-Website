@@ -2,11 +2,9 @@ from flask import Flask,render_template,request,session,redirect, url_for ,abort
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy,models_committed
 from flask_login import LoginManager
-from flask_sslify import SSLify
 import os,base64,random
 from werkzeug.utils import secure_filename
 import googlemaps,re
-from smspy import Way2sms
 import sys
 import operator
 
@@ -18,10 +16,9 @@ import operator
 
 
 app = Flask(__name__)
-# sslify = SSLify(app)
-gpath = os.path.join(app.root_path,"static","data","foodPanther.db")
+gpath = os.path.join(app.root_path,"static","data","bestFood.db")
 print("gpath"+gpath)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///static/data/foodPanther.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///static/data/bestFood.db'
 app.config["DATABASE"] = gpath
 app.config["MAX_ITEMS_PER_PAGE"] = 21
 IMAGES_FOLDER = os.path.join(app.root_path,"static","data","restaurant_images")
@@ -32,7 +29,7 @@ PROFILE_PICTURES = os.path.join(app.root_path,"static","data","user_profile_pics
 
 print(IMAGES_FOLDER)
 
-YOUTUBE_SPAMS = os.path.join(app.root_path,"static","data","datasets","YoutubeSpamMergedData.csv")
+# YOUTUBE_SPAMS = os.path.join(app.root_path,"static","data","datasets","YoutubeSpamMergedData.csv")
 
 ALLOWED_EXTENSIONS = set(['jpeg', 'jpg', 'png','JPG'])
 
@@ -42,7 +39,7 @@ app.config['PROFILE_PICTURES'] = PROFILE_PICTURES
 
 app.config['ITEM_PICTURES'] = ITEMS_FOLDER
 
-app.config['YouTubeSpam.csv'] = YOUTUBE_SPAMS
+# app.config['YouTubeSpam.csv'] = YOUTUBE_SPAMS
 
 
 db = SQLAlchemy(app)
@@ -857,10 +854,7 @@ def placeorder():
 
                 
                 
-                w2s = Way2sms()
-                w2s.login(9491049887, "Kish123")
-                w2s.send(phone, "your order from "+query.r_name+"  is taken by our panther and will be delivered shortly")
-                w2s.logout()
+                
                 flash("your order has been successfully placed.","success")
               
                 del session['u_cart']
@@ -1097,7 +1091,14 @@ def addmenu():
                     # print("1")
                     i_cost = session["v_menu_cart"]["i_cost"+str(i)]
                     # print("2")
-                    i_type = session["v_menu_cart"]["i_type"+str(i)]
+                    if(session["v_menu_cart"]["i_type"+str(i)]=='Non-veg'):
+                        i_type = 'nveg'
+                    elif(session["v_menu_cart"]["i_type"+str(i)]=='Veg'):
+                        i_type='veg'
+                    elif(session["v_menu_cart"]["i_type"+str(i)]=='Egg'):
+                        i_type='egg'
+                    else:
+                        i_type='others'
                     # print("3")                    
                     i_maincategory = session["v_menu_cart"]["i_maincategory"+str(i)]
                     # print("4")                    

@@ -182,7 +182,6 @@ function addItemToCart(obj, val) {
     }
     else {
            
-           console.log("kishore");
            var count = Object.keys(b_cart).length;
             console.log(count);
         if(count>0)
