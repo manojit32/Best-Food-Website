@@ -1,0 +1,28 @@
+{% extends "_base.html" %}
+{% block content%}
+{% if header%} {% include '_header.html' %} {% endif %}
+{% if session.email %}
+{% include '_vactionbar.html' %}
+	<div class="flex-row">
+	{% if recommenders %}
+		<!-- <div class=flash>you are logged in</div> -->
+		<div class="py-5">
+	
+		</div>
+	{% endif %}
+
+		<div class="py-5">
+
+		</div>
+		</div>
+{% else %}
+	<div class="flex-row">
+		<div class="py-5">
+			<div class="py-5">
+
+		</div>
+		</div>
+		</div>
+{% endif %}
+{% include '_flashmessages.html' %}
+{% endblock %}
