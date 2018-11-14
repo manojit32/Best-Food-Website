@@ -5,7 +5,7 @@
      {% if iList %}
 
         <div class="container-fluid">
-        
+
           <div class="panel panel-primary">
 
           <div class="panel-heading bg-warning"><h3 class="card-title py-0"  id="r_name">{{r_name}}</h3>
@@ -24,30 +24,32 @@
           <div data-icard ="{{r_id}}:{{d.get('i_id','')}}" class="filterDiv {{d.get('i_type','')}} card p-4 m-2" style="width:400px " >
           <div class="row">
             <div class="col-sm-4">
-              <img class="rounded img-fluid" id="i_image" src="/static/data/item_images/{{d.get('i_image','defaultitem.jpeg')}}" alt="Item{{loop.index}} Image">         
+              <img class="rounded img-fluid" id="i_image" src="/static/data/item_images/{{d.get('i_image','defaultitem.jpeg')}}" alt="Item{{loop.index}} Image">
             </div>
             <div class="col-sm-4">
               <h5 class="card-title py-0"  id="i_name">{{d.i_name}}</h5>
                <span style="font-family: verdana;">&#8377;</span><span id="i_cost">  {{d.i_cost}}</span>
-              
-              
+
+
             </div>
+            {% if showButton %}
               <div class="col-sm-4 pr-2">
                 <div class="btn-group">
-          
+
             <button value="{{ loop.index }}" class="btn btn-primary" onclick="dec(this);" data-i_id="{{d.get('i_id','')}}" data-r_id="{{r_id}}"> – </button>
             <input type="button" class="btn btn-primary" value="0" data-riid ="{{r_id}}:{{d.get('i_id','')}}"  id="{{loop.index}}" >
             <button  value="{{ loop.index }}" class="btn btn-primary" onclick="inc(this);" data-i_id="{{d.get('i_id','')}}" data-r_id="{{r_id}}"> + </button>
-          
+
           </div>
-          
-          
+
+
           </div>
-            
+          {% endif %}
+
             </div>
-          
+
             </div>
-            
+
             {% endfor %}
             </div>
             </div>
@@ -149,6 +151,5 @@
 
 
           </style>
-   
-{% endblock %}
 
+{% endblock %}
