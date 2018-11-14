@@ -1,9 +1,9 @@
 <nav class="navbar navbar-sticky-top m-0" style="background-color: #253340">
 
 
-    <!-- Links -->
+    <!-- Links cfhchch-->
     <div class="col-auto">
-	<a href="/"><img  src="/static/media/logo.jpg" height="100px" width="150px" alt="Best Food Logo"></a>
+	<a href="/"><img  src="/static/media/mylogo.png" height="100px" width="150px" alt="Food Panther Logo"></a>
     </div>
      {% if not removeCartSettings %}
     <div class="col-auto">
@@ -23,7 +23,7 @@
                     <a class="dropdown-item" href="{{ url_for('signup') }}">User</a>
                     <a class="dropdown-item" href="{{ url_for('vsignup') }}">Vendor</a>
                     </div>
-                       
+
                 </div>
      <!-- <button type="button" class="btn btn-primary" ><a href="{{ url_for('signup') }}">sign up</a></button> -->
      <!-- </div> -->
@@ -41,9 +41,9 @@
                     </div>
                   </div>
      <!-- </div> -->
-   
+
     {% else %}
-    
+
     {% include "_settingsMenu.html" %}
     {% if not removeCartSettings %}
     <button type="button" class="btn btn-outline-warning" id="sidebarCollapse" onclick="filterSelection('all');" {% if cartdisabled %} {{"disabled"}} {% endif %}>
@@ -64,5 +64,3 @@
     </div>
 	<!-- </div> -->
 </nav>
-
-
