@@ -151,7 +151,7 @@ class RestaurantCuisines(db.Model):
     rc_cuisines1 = db.Column(db.String(40))
     rc_cuisines2 = db.Column(db.String(40))
     rc_cuisines3 = db.Column(db.String(40))
-    rc_cuisines4 = db.Column(db.String(40))    
+    rc_cuisines4 = db.Column(db.String(40))
     rc_cuisines5 = db.Column(db.String(40))
     rc_cuisines6 = db.Column(db.String(40))
     rc_r_id = db.Column(db.Integer,db.ForeignKey('restaurant.r_id'))
@@ -191,7 +191,7 @@ def AddEntriesIntoDB():
         db.session.add(cuisine)
         db.session.commit()
         c+=1
-    return 
+    return
     for line in sys.stdin:
         # print(line.split(","))
         print(line)
@@ -206,21 +206,14 @@ def AddEntriesIntoDB():
             if cuisine4 == '':
                 cuisine4 = None
             if cuisine5 == '':
-                cuisine5 = None
-            if cuisine6 == '\n':
-                cuisine6 = None
-            if restaurant == "Foreign CafÃ©":
-                print(restaurant)
-                restaurant = "Foreign Café"
-            if restaurant == "Granny's Art CafÃ©":
-                restaurant = "Granny's Art Café"
+
             rc_id = Restaurant.query.filter_by(r_name=restaurant).first().r_id
             print(rc_id)
             hotel = RestaurantCuisines(rc_id=c,rc_cuisines1=cuisine1,rc_cuisines2=cuisine2,rc_cuisines3=cuisine3,rc_cuisines4=cuisine4,rc_cuisines5=cuisine5,rc_cuisines6=cuisine6,rc_r_id=rc_id)
             db.session.add(hotel)
             db.session.commit()
         c+=1
-    return 
+    return
 """
 def getRecommendations(Recommenders):
     recommend={}
@@ -243,7 +236,7 @@ def ContentBasedRecommendation(dataset,i_n_p_u_t,restaurant):
         for i in x:
             if i==i_n_p_u_t[restaurant][j] and i==1:
                 MatchScore+=1
-            j+=1    
+            j+=1
         neighbours[data] = MatchScore
     return neighbours
 
@@ -292,7 +285,7 @@ def getPopularRestaurants():
 def getNewRestaurants():
     res = Restaurant.query.order_by(Restaurant.r_votesCount).all()
     Nr = {}
-    for row in res: 
+    for row in res:
         Nr[row.r_id] = [row.r_name,row.r_images]
         if len(Nr.keys())>11:
             break
@@ -355,7 +348,7 @@ def search():
                     if(temp==mainlocation.lower()):
                         location_main=location
 
-                    
+
         sort = query_parameters.get('sort')
         minprice = query_parameters.get('minprice')
         maxprice = query_parameters.get('maxprice')
@@ -378,11 +371,11 @@ def search():
         #     query += ".filter(Restaurant.r_location.like('{}'))".format(session["location"])
         if (sort):
             if (sort=="1"):
-                query += ".order_by((Menu.i_cost))"       
+                query += ".order_by((Menu.i_cost))"
             elif (sort=="2"):
                 query += ".order_by(Menu.i_cost.desc())"
 
-        # print(query) 
+        # print(query)
         page = request.args.get('page', 1, type=int)
         q_paginated=eval(query).paginate(
         page, app.config['MAX_ITEMS_PER_PAGE']*2, False)
@@ -415,13 +408,13 @@ def search():
 def autosuggest(keyword):
     itemsList=Menu.query.filter(Menu.i_name.like('%'+keyword+'%')).all()
     autosuggestions=[]
-    count  = 0 
+    count  = 0
     for i in itemsList:
         autosuggestions.append(i.i_name)
         count = count+1
         if(count==5):
             break
-    
+
     return jsonify(autosuggestions)
 
 @app.route('/<latitude>/<longitude>')
@@ -440,7 +433,7 @@ def location(latitude,longitude):
 #        item_name = request.args.get('q')
 #        q=db.session.query(Menu,Restaurant).join(Restaurant).filter(Menu.r_id==Restaurant.r_id).filter(Menu.i_name.like('%'+item_name+'%')).all()
 #        d={}
-    
+
 #        for i in q:
 #            i_dict={}
 #            i_dict["i_id"]=i[0].i_id
@@ -452,9 +445,9 @@ def location(latitude,longitude):
 #                d[i[1].r_id].append(i_dict)
 #            else:
 #                d[i[1].r_id].append(i_dict)
-               
+
 #     return render_template("search.html",header=True,d=d,username=session['email'],scripts=["foodcart.js"])
-    
+
 @app.route("/vieworders",methods=['GET','POST'])
 def vieworders():
     u_invoices=[]
@@ -462,7 +455,7 @@ def vieworders():
         uid= session["id"]
         z=db.session.query(Order.o_u_id,Order.o_r_id,Order.o_order_date).group_by(Order.o_u_id,Order.o_r_id,Order.o_order_date).order_by(Order.o_order_date.desc()).filter_by(o_u_id=uid).all()
         #print("no of tup",len(z))
-        
+
         for i,j,k in z:
             u_each_order_lines=db.session.query(Order.o_u_id,Order.o_r_id,Order.o_order_date,Order.o_i_id,Order.o_i_quantity).filter_by(o_u_id=i,o_r_id=j,o_order_date=k).all()
             # print(u_each_order_lines)
@@ -470,7 +463,7 @@ def vieworders():
             u_order_keys={}
             temp=None
             for i,j,k,l,m in u_each_order_lines:
-                
+
                 u_order_keys[l]=m
                 temp=j
             d[j]=u_order_keys
@@ -482,7 +475,7 @@ def vieworders():
         for x,y in z1:
             z=db.session.query(Order.o_u_id,Order.o_r_id,Order.o_order_date).group_by(Order.o_u_id,Order.o_r_id,Order.o_order_date).order_by(Order.o_order_date.desc()).filter_by(o_r_id=y).all()
         #print("no of tup",len(z))
-        
+
         for i,j,k in z:
             u_each_order_lines=db.session.query(Order.o_u_id,Order.o_r_id,Order.o_order_date,Order.o_i_id,Order.o_i_quantity).filter_by(o_u_id=i,o_r_id=j,o_order_date=k).all()
             # print(u_each_order_lines)
@@ -490,7 +483,7 @@ def vieworders():
             u_order_keys={}
             temp=None
             for i,j,k,l,m in u_each_order_lines:
-                
+
                 u_order_keys[l]=m
                 temp=j
             d[j]=u_order_keys
@@ -546,10 +539,10 @@ def login():
 
 @app.route("/viewprofile",methods=["GET","POST"])
 def viewprofile():
-    
+
     u_details={}
     if ("email" in session and check(session["email"])):
-        
+
         if (request.method=="POST"):
             u_email=session["email"]
             # print(u_email)
@@ -588,17 +581,17 @@ def viewprofile():
                 if(isVendor()):
                     return render_template("viewprofile.html",header=True,mail_id=u_email,u_details=u_details,username=session["email"],scripts=["foodcart.js"],itemsDict=vLinksDict,profile_pic=os.path.join("static","data","user_profile_pics",filename),removeCartSettings=True)
                 return render_template("viewprofile.html",header=True,mail_id=u_email,u_details=u_details,username=session["email"],scripts=["foodcart.js"],itemsDict=uLinksDict,profile_pic=os.path.join("static","data","user_profile_pics",filename))
-            
+
             db.session.commit()
             # flash("Profile Updated Successfully",'success')
             u_details={'u_fname':u_fname,'u_lname':u_lname,'u_mobile':u_mobile,'u_address':u_address}
             if(isVendor()):
                 return render_template("viewprofile.html",header=True,mail_id=u_email,u_details=u_details,username=session["email"],scripts=["foodcart.js"],itemsDict=vLinksDict,profile_pic=os.path.join("static","data","user_profile_pics",image),removeCartSettings=True)
             return render_template("viewprofile.html",header=True,mail_id=u_email,u_details=u_details,username=session["email"],scripts=["foodcart.js"],itemsDict=uLinksDict,profile_pic=os.path.join("static","data","user_profile_pics",image))
-            
+
             # db.session.commit()
             # flash("Profile Updated Successfully",'success')
-            
+
             # u_details={'u_fname':u_fname,'u_lname':u_lname,'u_mobile':u_mobile,'u_address':u_address}
 
             # return render_template("viewprofile.html",header=True,username=session["email"],mail_id=u_email,u_details=u_details)
@@ -631,10 +624,10 @@ def viewprofile():
             user_this.v_lname=v_lname
             user_this.v_mobile=v_mobile
             user_this.v_address=v_address
-            
+
             db.session.commit()
             flash("Profile updated successfully",'success')
-            
+
             u_details={'u_fname':v_fname,'u_lname':v_lname,'u_mobile':v_mobile,'u_address':v_address}
             return render_template("viewprofile.html",header=True,username=session["email"],mail_id=v_email,u_details=u_details,removeCartSettings=True,itemsDict=vLinksDict)
         elif(request.method=="GET"):
@@ -688,11 +681,11 @@ def showrestaurants():
             query = "{}".format("Restaurant.query")
             if(sort):
                 if (sort=="1"):
-                    query += ".order_by((Restaurant.r_rating.desc()))" 
+                    query += ".order_by((Restaurant.r_rating.desc()))"
                 elif (sort=="2"):
-                    query += ".order_by(Restaurant.r_rating)" 
+                    query += ".order_by(Restaurant.r_rating)"
 
-            # print(query)        
+            # print(query)
             rList=[]
             rRows_paginated=eval(query).paginate(
         page, app.config['MAX_ITEMS_PER_PAGE'], False)
@@ -739,7 +732,7 @@ def checkout():
 
 @app.route("/getcheckoutform")
 def genForm():
-    
+
     if "u_cart" in session:
         if(request.method=="GET"):
             u_email=session["email"]
@@ -803,7 +796,7 @@ def genInvoice(cart_dict):
         #     invoice["total"]= round(total + invoice["tax"],2)
         # invoice["restaurant"] = r_name
 
-    return invoice    
+    return invoice
 
 
 
@@ -817,7 +810,7 @@ def placeorder():
             # print(session["u_cart"])
             if "u_cart" in session:
                 count=0
-                
+
                 for i in session["u_cart"]:
                     # print(i)
                     query=Restaurant.query.filter_by(r_id=i).first()
@@ -828,7 +821,7 @@ def placeorder():
                         phone=request.form["u_phone"]
                         address=request.form["u_address"]
                         if(query.r_location.lower() in address.lower()):
-                            
+
                             if(count==0):
 
                                 o=Order(o_order_date=datetime.now(),o_u_id=userid.u_id,o_r_id=i,o_i_id=j,o_i_quantity=session["u_cart"][i][j],o_price=menuprice.i_cost,o_name=name,o_phone=phone,o_address=address)
@@ -837,26 +830,26 @@ def placeorder():
                                 temp=o.o_order_date
                                 db.session.commit()
                             else:
-                                
+
 
                                 o=Order(o_order_date=temp,o_u_id=userid.u_id,o_r_id=i,o_i_id=j,o_i_quantity=session["u_cart"][i][j],o_price=menuprice.i_cost,o_name=name,o_phone=phone,o_address=address)
                                 db.session.add(o)
-                                
-                                
+
+
                                 db.session.commit()
                             count+=1
 
                         else:
-                            
+
                             notproperlocation=1
                             flash("please select a proper location for delivery","success")
                             return render_template("_postordersuccess.html",itemsDict=uLinksDict,username=session["email"],error=notproperlocation)
 
-                
-                
-                
+
+
+
                 flash("your order has been successfully placed.","success")
-              
+
                 del session['u_cart']
                 return render_template("_postordersuccess.html",itemsDict=uLinksDict,username=session["email"],error=0)
             flash("please add some items to cart","danger")
@@ -864,7 +857,7 @@ def placeorder():
         else:
             return render_template("login.html",header=True)
     else:
-        
+
         if ("email" in session and isUser()):
             flash("please do checkout before placing an order","danger")
             return redirect(url_for("homepage"))
@@ -892,7 +885,7 @@ def vgenInvoice(cart_dict):
             z=Order.query.filter_by(o_i_id= each_item_id).first()
             each_item_price = z.o_price
             each_item_name = q.i_name
-            
+
             each_item_price = round(each_item_price*each_item_quantity,2)
             item_details=[key,each_item_name,each_item_quantity, each_item_price]
             item={}
@@ -993,7 +986,7 @@ def addrestaurant():
                 # print("Iam rajesh",x.r_id)
                 db.session.commit()
                 flash("Successfully Added Restaurant Details",'success')
-                return render_template("homepage.html",header=True,username=session["email"],removeCartSettings=True,itemsDict=vLinksDict)
+                return render_template("homepage1.html",header=True,username=session["email"],removeCartSettings=True,itemsDict=vLinksDict)
         elif (request.method=="GET" and getRestaurantCount(vid)>0):
             abort(401,"Currently, you can add only one restaurant.")
         return render_template("addrestaurant.html",header=True,username=session["email"],removeCartSettings=True,itemsDict=vLinksDict)
@@ -1063,7 +1056,7 @@ def viewrestaurant():
 
 def allowed_file(filename):
     return '.'in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-  
+
 @app.route("/addmenu",methods=["GET","POST"])
 def addmenu():
     if ("email" in session and isVendor()):
@@ -1099,21 +1092,21 @@ def addmenu():
                         i_type='egg'
                     else:
                         i_type='others'
-                    # print("3")                    
+                    # print("3")
                     i_maincategory = session["v_menu_cart"]["i_maincategory"+str(i)]
-                    # print("4")                    
+                    # print("4")
                     i_subcategory1 = session["v_menu_cart"]["i_subcategory1"+str(i)]
                     # print("5","i_subcategory2"+str(i))
                     i_subcategory2 = session["v_menu_cart"]["i_subcategory2"+str(i)]
                     # print("###")
-                    
+
                     rid= getRID(vid)
                     i_imagebase64 = session["v_menu_cart"]["i_image"+str(i)]
                     i_image_mimecontent= i_imagebase64.split(',')[1]
                     i_imageURL=decodeBase64(i_imagebase64,i_image_mimecontent[0:12].replace('/',str(random.choice(range(100)))))
                     # print("ImageURI",i_imageURL)
                     x=Menu(r_id=rid,i_name=i_name,i_cost=i_cost,i_type=i_type,i_maincategory=i_maincategory,i_subcategory1=i_subcategory1,i_subcategory2=i_subcategory2,i_image=i_imageURL)
-                    
+
                     db.session.add(x)
                     db.session.commit()
                     i=i+1
@@ -1128,11 +1121,11 @@ def addmenu():
             return render_template("addrestaurant.html",header=True,username=session["email"],removeCartSettings=True,itemsDict=vLinksDict)
         return render_template("addmenu.html",header=True,username=session["email"],scripts=["foodcart.js"],removeCartSettings=True,itemsDict=vLinksDict)
     abort(401,"Pls login as  Vendor")
- 
+
 @app.route("/viewmenu",methods=["GET","POST"])
-def viewmenu(): 
+def viewmenu():
     if ("email" in session  and vcheck(session["email"])):
-        vid= session["id"] 
+        vid= session["id"]
         vemail = session["email"]
         if (request.method=="GET" and getRID(vid) is None):
             flash("You must add an Restaurant to add/view a menu","warning")
@@ -1247,6 +1240,3 @@ if __name__ == '__main__':
     # AddEntriesIntoDB()
     app.run(debug = True,use_reloader=False)
     # app.run()
-
-
-
