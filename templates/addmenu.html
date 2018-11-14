@@ -1,6 +1,7 @@
 {% extends "_base.html" %}
 {% block content%}
     {% if header%} {% include '_header.html' %} {% endif %}
+    {% include '_vactionbar.html' %}
     {% if d %}  {% endif %}
     <div class="container-fluid ">
         {% include '_flashmessages.html' %}
@@ -87,7 +88,7 @@
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
             </form>
                         <button id="addmenubuttonid" style="display: inline;" class="btn btn-primary" style="margin-right:auto;margin-left:auto;">Add Menu</button>
@@ -96,7 +97,7 @@
         <!-- <div class="d-flex justify-content-center">
         <form action="/addmenu" method="POST">
                 <div class="form-row">
-                
+
                 <div class="form-group col-md-2">
                         <label for="i_name">Item Name</label>
                         <input name="i_name" type="text" class="form-control toggleperm" id="i_name">
@@ -105,7 +106,7 @@
                         <label for="i_cost">Price</label>
                         <input name="i_cost" type="text" class="form-control toggleperm" id="i_cost">
                 </div>
-                
+
                 <div class="form-group col-auto">
                     <label for="i_type">Type</label>
                     <div class="lg">
@@ -135,13 +136,13 @@
                     <label for="i_subcategory2">Subcategory2</label>
                     <input name="i_subcategory2" type="text" class="form-control toggleperm" id="i_subcategory2">
                 </div>
-                
+
                 </div>
                 <button type="submit" id="addmenubuttonid" style="display: block;" class="btn btn-primary" >save changes</button>
-  
+
             </form>
         </div> -->
-        
+
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" -->
     <!-- crossorigin="anonymous"></script> -->
@@ -189,7 +190,7 @@
                         "<input type='text' name='i_subcategory2" + i + "' placeholder='Item Sub Category 2' class='form-control' />" +
                         "</td>"+
                         "<td>"+
-                         
+
                                 "<input name='"+i+"' id='"+i+"' type='file' name='file' class='form-control' onchange='loadImageFileAsURL(this);' />"+
 
                         "</td>");
@@ -204,7 +205,7 @@
                         i--;
                     }
                 });
-                
+
                 $("#addmenubuttonid").click(function () {
                   postJSON("/addmenu", ConvertFormToJSON($("#menuform")))
 
@@ -219,12 +220,12 @@
                     var array = jQuery(form).serializeArray();
                     var mainjson={};
                     var i=0;
-                    
+
 
                     jQuery.each(array, function () {
-                        json[this.name] = this.value || '';	
+                        json[this.name] = this.value || '';
                     });
-                    
+
                     return json;
                 }
 
@@ -242,7 +243,7 @@
                          //   (
                           //  "textAreaFileContents"
                            // );
-                        json["i_image"+image_key] = fileLoadedEvent.target.result || '';	
+                        json["i_image"+image_key] = fileLoadedEvent.target.result || '';
                         //alert(JSON.stringify(json));
                         //alert(fileLoadedEvent.target.result)
                         //textAreaFileContents.innerHTML = fileLoadedEvent.target.result;
@@ -253,6 +254,6 @@
             }
 
 
-    
+
 </script>
 {% endblock %}
