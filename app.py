@@ -715,7 +715,7 @@ def showitems(r_id):
             for item in itemsList:
                 menuitemsList.append(dict(zip(item.keys(), item)))
             # print(menuitemsList)
-            return render_template("showitems.html",header=True,username=session["email"],itemsDict=uLinksDict,r_id=current_r_id,r_name=current_r_name,iList = menuitemsList,scripts=["foodcart.js"])
+            return render_template("showitems.html",header=True,username=session["email"],itemsDict=uLinksDict,r_id=current_r_id,r_name=current_r_name,iList = menuitemsList,scripts=["foodcart.js"],showButton=True)
     abort(401,"Pls Login as User")
 
 
@@ -1136,13 +1136,19 @@ def viewmenu():
             if (current_vendor_restaurant is not None):
                 current_r_id = current_vendor_restaurant.r_id
                 itemsList=Menu.query.filter_by(r_id=current_r_id).all()
+                current_r_name=Restaurant.query.filter_by(r_id=current_r_id).first().r_name
                 menuitemsDict = {}
-                count=0
+                # count=0
+                # for item in itemsList:
+                #     menuitemsDict[count] =dict(zip(item.keys(), item))
+                #     count+=1
+
+                menuitemsList = []
                 for item in itemsList:
-                    menuitemsDict[count] =dict(zip(item.keys(), item))
-                    count+=1
+                    menuitemsList.append(dict(zip(item.keys(), item)))
                 # rdict={'r_name': y.r_name,'r_phone': y.r_phone, 'r_address': y.r_address,'r_email': y.r_email,'r_website': y.r_website,'r_location': y.r_location,'r_city':y.r_city,'r_zip':y.r_zip}
-                return str(menuitemsDict)
+                # return str(menuitemsDict)
+                return render_template("showitems.html",header=True,username=session["email"],itemsDict=vLinksDict,r_id=current_r_id,r_name=current_r_name,iList = menuitemsList,scripts=["foodcart.js"],removeCartSettings=True,showButton=False)
                 #render_template("viewrestaurant.html",header=True,username=session["email"],d=rdict)
             return abort(401,"No Restaurants Found")
         elif (request.method=="POST"):
